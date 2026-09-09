@@ -2,22 +2,22 @@
 
 Tested combinations of CUBRID server, Python version, and driver/framework.
 
-> **What "tested" means here**: CI runs `make verify` on **CUBRID 11.2 / Python
-> 3.12**, comparing stdout against the **46 recipes that ship goldens**
+> **What "tested" means here**: CI runs `make verify` on **CUBRID 11.2 and 11.4 / Python
+> 3.12** (job matrix), comparing stdout against the **46 recipes that ship goldens**
 > (`expected/*.expected`). The Flask, FastAPI, Streamlit, and Django recipes are
 > covered by pytest suites that are **run manually** (see [How to Test](#how-to-test-against-a-specific-version)),
-> not in CI. CUBRID 11.4 has no CI job.
+> not in CI.
 
 ## CUBRID Server Versions
 
 | CUBRID | Status | Notes |
 |--------|--------|-------|
 | **11.2** | ✅ CI-verified | Primary CI target — 46 example outputs checked by `make verify` |
-| **11.4** | ⚠️ Expected to work | Same CAS protocol as 11.2; **not exercised in CI** |
+| **11.4** | ✅ CI-verified | Same CAS protocol as 11.2; runs in the smoke-test job matrix (`make verify` goldens) |
 | 11.0 | ⚠️ Untested | Should work (same CAS protocol) |
 | 10.2 | ⚠️ Untested | Should work (same CAS protocol) |
-> **Scope note**: CI exercises only CUBRID **11.2** with Python **3.12**. Older
-> versions (10.2, 11.0) and newer 11.4 share the same CAS protocol and should
+> **Scope note**: CI exercises CUBRID **11.2 and 11.4** (smoke-test job matrix) with
+> Python **3.12**. Older versions (10.2, 11.0) share the same CAS protocol and should
 > work but are **not exercised in CI**. The drivers (`pycubrid`,
 > `sqlalchemy-cubrid`) themselves run the full 10.2–11.4 matrix in their own
 > repositories.
@@ -57,8 +57,8 @@ The cookbook ships **62 recipes**. Verification is split:
 - The **Flask, FastAPI, Streamlit, and Django** recipes are covered by pytest
   suites that are **run manually** (see [How to Test](#how-to-test-against-a-specific-version)),
   not in CI.
-- **CUBRID 11.4** has no CI job; it shares the CAS protocol with 11.2 and is
-  expected to work but is not exercised automatically.
+- **CUBRID 11.4** runs in the same CI smoke matrix as 11.2 (its `make verify` goldens
+  are checked on both versions).
 
 | Category | Recipes | Verified by |
 |----------|---------|-------------|
@@ -90,7 +90,7 @@ See [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md) for details and workarounds.
 ```yaml
 # docker-compose.yml — change tag to test different versions
 image: cubrid/cubrid:11.2   # default
-image: cubrid/cubrid:11.4   # expected to work; not exercised in CI
+image: cubrid/cubrid:11.4   # also exercised in CI (smoke-test job matrix)
 ```
 
 ## How to Test Against a Specific Version
