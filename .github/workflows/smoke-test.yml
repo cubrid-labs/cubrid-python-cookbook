@@ -22,7 +22,12 @@ permissions:
 
 jobs:
   verify:
+    name: Smoke Tests (CUBRID ${{ matrix.cubrid }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cubrid: ["11.2", "11.4"]
     steps:
       - name: Report trigger
         env:
@@ -119,7 +124,7 @@ jobs:
           docker run -d --name cubrid --shm-size 512m \
             -e CUBRID_DB=testdb \
             -p 33000:33000 -p 1523:1523 \
-            cubrid/cubrid:11.2
+          cubrid/cubrid:${{ matrix.cubrid }}
 
       - name: Setup Python
         uses: actions/setup-python@v5
