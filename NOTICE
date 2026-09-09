@@ -1,0 +1,10 @@
+cubrid-cookbook-python
+Copyright (c) 2025 CUBRID Labs
+
+This project is licensed under the MIT License (see LICENSE).
+
+All example code in this repository is an original work. Example patterns
+reference third-party open-source frameworks (SQLAlchemy, FastAPI, Flask,
+Django, Streamlit, pandas, Celery, and others) by import only; no
+third-party source code is embedded. Third-party licenses are enumerated
+in THIRD_PARTY_LICENSES.md.
